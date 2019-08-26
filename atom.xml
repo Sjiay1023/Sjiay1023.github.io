@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-08-20T09:13:33.536Z</updated>
+  <updated>2019-08-26T11:54:33.231Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>SpringBoot集成通用mapper</title>
+    <link href="http://yoursite.com/2019/08/26/SpringBoot%E9%9B%86%E6%88%90%E9%80%9A%E7%94%A8mapper/"/>
+    <id>http://yoursite.com/2019/08/26/SpringBoot集成通用mapper/</id>
+    <published>2019-08-26T08:35:22.000Z</published>
+    <updated>2019-08-26T11:54:33.231Z</updated>
+    
+    <content type="html"><![CDATA[<p>原先使用的mybatis-generator-core会生成大量example的文件影响后期维护以及数据库的迁移，<br>所以考虑对用通用mapper项目做一次啊重构减少项目代码的耦合性，以下是具体流程以及重构过<br>程各中遇到的坑。<br>[官方文档]（<a href="https://mapperhelper.github.io/docs/）" target="_blank" rel="noopener">https://mapperhelper.github.io/docs/）</a></p><a id="more"></a><p>#主要环境<br>编译器使用IDEA，数据库使用Mysql8.0.14，构建工具使用gradle</p><p>#一、添加依赖</p><pre><code>buildscript {    ext {        springBootVersion = &apos;2.1.2.RELEASE&apos;    }    repositories {        mavenCentral()    }    dependencies {        classpath(&quot;org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}&quot;)    }}apply plugin: &apos;java&apos;apply plugin: &apos;org.springframework.boot&apos;apply plugin: &apos;io.spring.dependency-management&apos;group = &apos;mhh&apos;version = &apos;1.0&apos;sourceCompatibility = &apos;1.8&apos;repositories {    mavenLocal()    mavenCentral()}ext {    set(&apos;springCloudVersion&apos;, &apos;Greenwich.RC2&apos;)}dependencies {    runtimeOnly &apos;mysql:mysql-connector-java&apos;    testImplementation &apos;org.springframework.boot:spring-boot-starter-test&apos;    compile group: &apos;org.mybatis.generator&apos;, name: &apos;mybatis-generator-core&apos;, version: &apos;1.3.5&apos;    compile group: &apos;tk.mybatis&apos;, name: &apos;mapper&apos;, version: &apos;4.0.3&apos;    compile group: &apos;com.github.pagehelper&apos;, name: &apos;pagehelper-spring-boot-starter&apos;, version: &apos;1.2.5&apos;    compile group: &apos;com.alibaba&apos;, name: &apos;druid-spring-boot-starter&apos;, version: &apos;1.1.10&apos;    compile group: &apos;org.springframework&apos;, name: &apos;spring-jdbc&apos;, version: &apos;5.1.4.RELEASE&apos;}dependencyManagement {    imports {        mavenBom &quot;org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}&quot;    }}bootJar {    destinationDir = rootProject.file(&apos;build/libs&apos;)    archiveName = &apos;app.jar&apos;} 、、、</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;原先使用的mybatis-generator-core会生成大量example的文件影响后期维护以及数据库的迁移，&lt;br&gt;所以考虑对用通用mapper项目做一次啊重构减少项目代码的耦合性，以下是具体流程以及重构过&lt;br&gt;程各中遇到的坑。&lt;br&gt;[官方文档]（&lt;a href=&quot;https://mapperhelper.github.io/docs/）&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://mapperhelper.github.io/docs/）&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="后端" scheme="http://yoursite.com/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    
+      <category term="Spring" scheme="http://yoursite.com/tags/Spring/"/>
+    
+  </entry>
   
   <entry>
     <title>第一个博客</title>

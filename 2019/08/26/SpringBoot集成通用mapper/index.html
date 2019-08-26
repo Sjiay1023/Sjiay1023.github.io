@@ -17,16 +17,21 @@
   <meta http-equiv="window-target" content="_top">
   
   
-  <title>归档: 2019/8 | MyBlog</title>
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2019/08/index.html">
+  <title>SpringBoot集成通用mapper | MyBlog</title>
+  <meta name="description" content="原先使用的mybatis-generator-core会生成大量example的文件影响后期维护以及数据库的迁移，所以考虑对用通用mapper项目做一次啊重构减少项目代码的耦合性，以下是具体流程以及重构过程各中遇到的坑。[官方文档]（https://mapperhelper.github.io/docs/）">
+<meta name="keywords" content="Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot集成通用mapper">
+<meta property="og:url" content="http://yoursite.com/2019/08/26/SpringBoot集成通用mapper/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="原先使用的mybatis-generator-core会生成大量example的文件影响后期维护以及数据库的迁移，所以考虑对用通用mapper项目做一次啊重构减少项目代码的耦合性，以下是具体流程以及重构过程各中遇到的坑。[官方文档]（https://mapperhelper.github.io/docs/）">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-26T11:54:33.231Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="SpringBoot集成通用mapper">
+<meta name="twitter:description" content="原先使用的mybatis-generator-core会生成大量example的文件影响后期维护以及数据库的迁移，所以考虑对用通用mapper项目做一次啊重构减少项目代码的耦合性，以下是具体流程以及重构过程各中遇到的坑。[官方文档]（https://mapperhelper.github.io/docs/）">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://yoursite.com/archives/2019/08/index.html">
+  <link rel="canonical" href="http://yoursite.com/2019/08/26/SpringBoot集成通用mapper/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -310,68 +315,235 @@
   
   
 <main class="main" role="main">
-  	<article class="content article article-archives article-type-list" itemscope="">
-	    <header class="article-header">
-	      <h1 itemprop="title">归档: 2019/8</h1>
-	      <p class="text-muted">共 3 篇文章</p>
-	    </header>
-	    <div class="article-body">
-	      
+  <div class="content">
+  <article id="post-SpringBoot集成通用mapper" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
   
+    <h1 class="article-title" itemprop="name">
+      SpringBoot集成通用mapper
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/08/26/SpringBoot集成通用mapper/" class="article-date">
+	  <time datetime="2019-08-26T08:35:22.000Z" itemprop="datePublished">2019-08-26</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/后端/">后端</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/Spring/">Spring</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/08/26/SpringBoot集成通用mapper/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 319(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 1(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>原先使用的mybatis-generator-core会生成大量example的文件影响后期维护以及数据库的迁移，<br>所以考虑对用通用mapper项目做一次啊重构减少项目代码的耦合性，以下是具体流程以及重构过<br>程各中遇到的坑。<br>[官方文档]（<a href="https://mapperhelper.github.io/docs/）" target="_blank" rel="noopener">https://mapperhelper.github.io/docs/）</a></p>
+<a id="more"></a>
+<p>#主要环境<br>编译器使用IDEA，数据库使用Mysql8.0.14，构建工具使用gradle</p>
+<p>#一、添加依赖</p>
+<pre><code>buildscript {
+    ext {
+        springBootVersion = &apos;2.1.2.RELEASE&apos;
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath(&quot;org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}&quot;)
+    }
+}
+
+apply plugin: &apos;java&apos;
+apply plugin: &apos;org.springframework.boot&apos;
+apply plugin: &apos;io.spring.dependency-management&apos;
+
+group = &apos;mhh&apos;
+version = &apos;1.0&apos;
+sourceCompatibility = &apos;1.8&apos;
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+ext {
+    set(&apos;springCloudVersion&apos;, &apos;Greenwich.RC2&apos;)
+}
+
+dependencies {
+    runtimeOnly &apos;mysql:mysql-connector-java&apos;
+    testImplementation &apos;org.springframework.boot:spring-boot-starter-test&apos;
+    compile group: &apos;org.mybatis.generator&apos;, name: &apos;mybatis-generator-core&apos;, version: &apos;1.3.5&apos;
+    compile group: &apos;tk.mybatis&apos;, name: &apos;mapper&apos;, version: &apos;4.0.3&apos;
+    compile group: &apos;com.github.pagehelper&apos;, name: &apos;pagehelper-spring-boot-starter&apos;, version: &apos;1.2.5&apos;
+    compile group: &apos;com.alibaba&apos;, name: &apos;druid-spring-boot-starter&apos;, version: &apos;1.1.10&apos;
+    compile group: &apos;org.springframework&apos;, name: &apos;spring-jdbc&apos;, version: &apos;5.1.4.RELEASE&apos;
+}
+dependencyManagement {
+    imports {
+        mavenBom &quot;org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}&quot;
+    }
+}
+bootJar {
+    destinationDir = rootProject.file(&apos;build/libs&apos;)
+    archiveName = &apos;app.jar&apos;
+}
+ 、、、</code></pre>
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://yoursite.com/2019/08/26/SpringBoot集成通用mapper/" title="SpringBoot集成通用mapper" target="_blank" rel="external">http://yoursite.com/2019/08/26/SpringBoot集成通用mapper/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/Sjiay1023" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/Sjiay1023" target="_blank"><span class="text-dark">Sjiay</span><small class="ml-1x">Java Developer</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
   
     
+  <section id="comments">
+  	
+      <div id="uyan_frame"></div>
     
-      
-      
-      <section class="panel panel-default b-no">
-        <div class="panel-heading" role="tab">
-          <h3 class="panel-title">
-            <a data-toggle="collapse" href="#collapse2019" aria-expanded="true">
-              <i class="icon icon-calendar-plus text-active"></i><i class="icon icon-calendar-minus text"></i>
-              2019
-            </a>
-            <!-- <a href="/archives/2019" class="archive-year">2019</a> -->
-          </h3>
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2019/08/19/me-first-blog/" title="第一个博客"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,wechat,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div id="collapse2019" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading2019">
-        <div class="panel-body">
-          <div class="collection">
-    
-    
-<a href="/2019/08/26/SpringBoot集成通用mapper/" class="collection-item" target="_blank" itemprop="url">
-  <time datetime="2019-08-26T08:35:22.000Z" itemprop="datePublished">2019-08-26</time>
-  <span>&nbsp;&nbsp;&nbsp;</span> SpringBoot集成通用mapper
-</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 
-  
-    
-    
-    
-<a href="/2019/08/19/me-first-blog/" class="collection-item" target="_blank" itemprop="url">
-  <time datetime="2019-08-19T10:25:11.000Z" itemprop="datePublished">2019-08-19</time>
-  <span>&nbsp;&nbsp;&nbsp;</span> 第一个博客
-</a>
 
-
-  
-    
-    
-    
-<a href="/2019/08/19/hello-world/" class="collection-item" target="_blank" itemprop="url">
-  <time datetime="2019-08-19T08:37:14.431Z" itemprop="datePublished">2019-08-19</time>
-  <span>&nbsp;&nbsp;&nbsp;</span> Hello World
-</a>
-
-
-  
-  
-    </div></div></div></section>
-  
-
-	    </div>
-  	</article>
-  	 	
 </main>
 
   <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
@@ -425,6 +597,18 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
 
 
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+    <script defer type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=[object Object]"></script>
 
 
 
