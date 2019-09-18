@@ -243,7 +243,7 @@
   <div class="widget">
     <h3 class="widget-title">归档</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">4</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -262,10 +262,10 @@
                 <a class="category-link" href="/categories/后端/">后端</a>
               </p>
               <p class="item-title">
-                <a href="/2019/08/26/SpringBoot集成通用mapper/" class="title">SpringBoot集成通用mapper</a>
+                <a href="/2019/09/18/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/" class="title">SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权</a>
               </p>
               <p class="item-date">
-                <time datetime="2019-08-26T08:35:22.000Z" itemprop="datePublished">2019-08-26</time>
+                <time datetime="2019-09-18T08:35:22.000Z" itemprop="datePublished">2019-09-18</time>
               </p>
             </div>
           </li>
@@ -277,7 +277,7 @@
                 <a class="category-link" href="/categories/后端/">后端</a>
               </p>
               <p class="item-title">
-                <a href="/2019/08/26/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/" class="title">SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权</a>
+                <a href="/2019/08/26/SpringBoot集成通用mapper/" class="title">SpringBoot集成通用mapper</a>
               </p>
               <p class="item-date">
                 <time datetime="2019-08-26T08:35:22.000Z" itemprop="datePublished">2019-08-26</time>
@@ -334,6 +334,54 @@
     
   
     <h1 itemprop="name">
+      <a class="article-title" href="/2019/09/18/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/">SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <p>本项目是SpringBoot+Mybatis实现的后端项目,相关测试都使用postman进行了测试，主要的思想是利用token<br>作为前后端交互身份验证信息，通过设置token的刷新时间来保证token的安全性，同时将token放入redis中，<br>并建立黑名单，将过期以及登出的token移到黑名单，使用SpringSecurity实现对用户的认证鉴权。</p>
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/09/18/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/" class="article-date">
+	  <time datetime="2019-09-18T08:35:22.000Z" itemprop="datePublished">9月 18</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/后端/">后端</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/Spring/">Spring</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/09/18/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/#comments" class="article-comment-link">评论</a></span>
+    
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 3.6k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 17(分)</span>
+	
+
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
       <a class="article-title" href="/2019/08/26/SpringBoot集成通用mapper/">SpringBoot集成通用mapper</a>
     </h1>
   
@@ -365,54 +413,6 @@
 
 
     <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/08/26/SpringBoot集成通用mapper/#comments" class="article-comment-link">评论</a></span>
-    
-	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 3.5k(字)</span>
-	
-	
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 17(分)</span>
-	
-
-  </p>
-</article>
-
-    
-      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
-  <div class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/26/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/">SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权</a>
-    </h1>
-  
-
-  </div>
-  
-  <div class="article-entry text-muted" itemprop="description">
-    <p>原先使用的mybatis-generator-core会生成大量example的文件影响后期维护以及数据库的迁移，<br>所以考虑对用通用mapper项目做一次啊重构减少项目代码的耦合性，以下是具体流程以及重构过<br>程各中遇到的坑。<br>[官方文档]（<a href="https://mapperhelper.github.io/docs/）" target="_blank" rel="noopener">https://mapperhelper.github.io/docs/）</a></p>
-  </div>
-  
-  <p class="article-meta">
-    <span class="article-date">
-    <i class="icon icon-calendar-check"></i>
-	<a href="/2019/08/26/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/" class="article-date">
-	  <time datetime="2019-08-26T08:35:22.000Z" itemprop="datePublished">8月 26</time>
-	</a>
-</span>
-    
-  <span class="article-category">
-    <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/后端/">后端</a>
-  </span>
-
-    
-  <span class="article-tag">
-    <i class="icon icon-tags"></i>
-	<a class="article-tag-link" href="/tags/Spring/">Spring</a>
-  </span>
-
-
-    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/08/26/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/#comments" class="article-comment-link">评论</a></span>
     
 	
 		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 3.5k(字)</span>

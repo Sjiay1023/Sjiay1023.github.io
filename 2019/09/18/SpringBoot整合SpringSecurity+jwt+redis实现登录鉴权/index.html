@@ -18,20 +18,22 @@
   
   
   <title>SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权 | MyBlog</title>
-  <meta name="description" content="原先使用的mybatis-generator-core会生成大量example的文件影响后期维护以及数据库的迁移，所以考虑对用通用mapper项目做一次啊重构减少项目代码的耦合性，以下是具体流程以及重构过程各中遇到的坑。[官方文档]（https://mapperhelper.github.io/docs/）">
+  <meta name="description" content="本项目是SpringBoot+Mybatis实现的后端项目,相关测试都使用postman进行了测试，主要的思想是利用token作为前后端交互身份验证信息，通过设置token的刷新时间来保证token的安全性，同时将token放入redis中，并建立黑名单，将过期以及登出的token移到黑名单，使用SpringSecurity实现对用户的认证鉴权。">
 <meta name="keywords" content="Spring">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权">
-<meta property="og:url" content="https://Sjiay1023.github.io/2019/08/26/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/index.html">
+<meta property="og:url" content="https://Sjiay1023.github.io/2019/09/18/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="原先使用的mybatis-generator-core会生成大量example的文件影响后期维护以及数据库的迁移，所以考虑对用通用mapper项目做一次啊重构减少项目代码的耦合性，以下是具体流程以及重构过程各中遇到的坑。[官方文档]（https://mapperhelper.github.io/docs/）">
+<meta property="og:description" content="本项目是SpringBoot+Mybatis实现的后端项目,相关测试都使用postman进行了测试，主要的思想是利用token作为前后端交互身份验证信息，通过设置token的刷新时间来保证token的安全性，同时将token放入redis中，并建立黑名单，将过期以及登出的token移到黑名单，使用SpringSecurity实现对用户的认证鉴权。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-18T03:20:31.785Z">
+<meta property="og:image" content="https://sjiay1023.github.io/imgages/flow.png">
+<meta property="og:updated_time" content="2019-09-18T08:05:25.620Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权">
-<meta name="twitter:description" content="原先使用的mybatis-generator-core会生成大量example的文件影响后期维护以及数据库的迁移，所以考虑对用通用mapper项目做一次啊重构减少项目代码的耦合性，以下是具体流程以及重构过程各中遇到的坑。[官方文档]（https://mapperhelper.github.io/docs/）">
+<meta name="twitter:description" content="本项目是SpringBoot+Mybatis实现的后端项目,相关测试都使用postman进行了测试，主要的思想是利用token作为前后端交互身份验证信息，通过设置token的刷新时间来保证token的安全性，同时将token放入redis中，并建立黑名单，将过期以及登出的token移到黑名单，使用SpringSecurity实现对用户的认证鉴权。">
+<meta name="twitter:image" content="https://sjiay1023.github.io/imgages/flow.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://Sjiay1023.github.io/2019/08/26/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/index.html">
+  <link rel="canonical" href="https://Sjiay1023.github.io/2019/09/18/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -248,7 +250,7 @@
   <div class="widget">
     <h3 class="widget-title">归档</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">4</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -267,10 +269,10 @@
                 <a class="category-link" href="/categories/后端/">后端</a>
               </p>
               <p class="item-title">
-                <a href="/2019/08/26/SpringBoot集成通用mapper/" class="title">SpringBoot集成通用mapper</a>
+                <a href="/2019/09/18/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/" class="title">SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权</a>
               </p>
               <p class="item-date">
-                <time datetime="2019-08-26T08:35:22.000Z" itemprop="datePublished">2019-08-26</time>
+                <time datetime="2019-09-18T08:35:22.000Z" itemprop="datePublished">2019-09-18</time>
               </p>
             </div>
           </li>
@@ -282,7 +284,7 @@
                 <a class="category-link" href="/categories/后端/">后端</a>
               </p>
               <p class="item-title">
-                <a href="/2019/08/26/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/" class="title">SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权</a>
+                <a href="/2019/08/26/SpringBoot集成通用mapper/" class="title">SpringBoot集成通用mapper</a>
               </p>
               <p class="item-date">
                 <time datetime="2019-08-26T08:35:22.000Z" itemprop="datePublished">2019-08-26</time>
@@ -335,7 +337,7 @@
   <div class="slimContent">
     <nav id="toc" class="article-toc">
       <h3 class="toc-title">文章目录</h3>
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、添加依赖"><span class="toc-number">1.</span> <span class="toc-text">一、添加依赖</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、创建BaseMapper"><span class="toc-number">2.</span> <span class="toc-text">二、创建BaseMapper</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、配置application-yml"><span class="toc-number">3.</span> <span class="toc-text">三、配置application.yml</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、自动化生成配置"><span class="toc-number">4.</span> <span class="toc-text">四、自动化生成配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#generatorConfig-xml配置"><span class="toc-number">4.1.</span> <span class="toc-text">generatorConfig.xml配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#新建自动生成工具类"><span class="toc-number">4.2.</span> <span class="toc-text">新建自动生成工具类</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、配置SpringBoot启动类"><span class="toc-number">5.</span> <span class="toc-text">五、配置SpringBoot启动类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#六、实体"><span class="toc-number">6.</span> <span class="toc-text">六、实体</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#公共实体封装"><span class="toc-number">6.1.</span> <span class="toc-text">公共实体封装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#业务实体实现"><span class="toc-number">6.2.</span> <span class="toc-text">业务实体实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#七、Service实现"><span class="toc-number">7.</span> <span class="toc-text">七、Service实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#公共Service封装"><span class="toc-number">7.1.</span> <span class="toc-text">公共Service封装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#业务Service实现"><span class="toc-number">7.2.</span> <span class="toc-text">业务Service实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#八、测试一下"><span class="toc-number">8.</span> <span class="toc-text">八、测试一下</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、SpringBoot"><span class="toc-number">1.</span> <span class="toc-text">一、SpringBoot</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、创建BaseMapper"><span class="toc-number">2.</span> <span class="toc-text">二、创建BaseMapper</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、配置application-yml"><span class="toc-number">3.</span> <span class="toc-text">三、配置application.yml</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、自动化生成配置"><span class="toc-number">4.</span> <span class="toc-text">四、自动化生成配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#generatorConfig-xml配置"><span class="toc-number">4.1.</span> <span class="toc-text">generatorConfig.xml配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#新建自动生成工具类"><span class="toc-number">4.2.</span> <span class="toc-text">新建自动生成工具类</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、配置SpringBoot启动类"><span class="toc-number">5.</span> <span class="toc-text">五、配置SpringBoot启动类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#六、实体"><span class="toc-number">6.</span> <span class="toc-text">六、实体</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#公共实体封装"><span class="toc-number">6.1.</span> <span class="toc-text">公共实体封装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#业务实体实现"><span class="toc-number">6.2.</span> <span class="toc-text">业务实体实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#七、Service实现"><span class="toc-number">7.</span> <span class="toc-text">七、Service实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#公共Service封装"><span class="toc-number">7.1.</span> <span class="toc-text">公共Service封装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#业务Service实现"><span class="toc-number">7.2.</span> <span class="toc-text">业务Service实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#八、测试一下"><span class="toc-number">8.</span> <span class="toc-text">八、测试一下</span></a></li></ol>
     </nav>
   </div>
 </aside>
@@ -357,8 +359,8 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2019/08/26/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/" class="article-date">
-	  <time datetime="2019-08-26T08:35:22.000Z" itemprop="datePublished">2019-08-26</time>
+	<a href="/2019/09/18/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/" class="article-date">
+	  <time datetime="2019-09-18T08:35:22.000Z" itemprop="datePublished">2019-09-18</time>
 	</a>
 </span>
         
@@ -383,10 +385,10 @@
 	</span>
 
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/08/26/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/09/18/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/#comments" class="article-comment-link">评论</a></span>
         
 	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 3.5k(字)</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 3.6k(字)</span>
 	
 	
 		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 17(分)</span>
@@ -396,10 +398,12 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p>原先使用的mybatis-generator-core会生成大量example的文件影响后期维护以及数据库的迁移，<br>所以考虑对用通用mapper项目做一次啊重构减少项目代码的耦合性，以下是具体流程以及重构过<br>程各中遇到的坑。<br>[官方文档]（<a href="https://mapperhelper.github.io/docs/）" target="_blank" rel="noopener">https://mapperhelper.github.io/docs/）</a></p>
+        <p>本项目是SpringBoot+Mybatis实现的后端项目,相关测试都使用postman进行了测试，主要的思想是利用token<br>作为前后端交互身份验证信息，通过设置token的刷新时间来保证token的安全性，同时将token放入redis中，<br>并建立黑名单，将过期以及登出的token移到黑名单，使用SpringSecurity实现对用户的认证鉴权。</p>
 <a id="more"></a>
-<p>#主要环境<br>编译器使用IDEA，数据库使用Mysql8.0.14，构建工具使用gradle</p>
-<h1 id="一、添加依赖"><a href="#一、添加依赖" class="headerlink" title="一、添加依赖"></a>一、添加依赖</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">buildscript &#123;</span><br><span class="line">    ext &#123;</span><br><span class="line">        springBootVersion = &apos;2.1.2.RELEASE&apos;</span><br><span class="line">    &#125;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        mavenCentral()</span><br><span class="line">    &#125;</span><br><span class="line">    dependencies &#123;</span><br><span class="line">        classpath(&quot;org.springframework.boot:spring-boot-gradle-plugin:$&#123;springBootVersion&#125;&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">apply plugin: &apos;java&apos;</span><br><span class="line">apply plugin: &apos;org.springframework.boot&apos;</span><br><span class="line">apply plugin: &apos;io.spring.dependency-management&apos;</span><br><span class="line"></span><br><span class="line">group = &apos;mhh&apos;</span><br><span class="line">version = &apos;1.0&apos;</span><br><span class="line">sourceCompatibility = &apos;1.8&apos;</span><br><span class="line"></span><br><span class="line">repositories &#123;</span><br><span class="line">    mavenLocal()</span><br><span class="line">    mavenCentral()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ext &#123;</span><br><span class="line">    set(&apos;springCloudVersion&apos;, &apos;Greenwich.RC2&apos;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    runtimeOnly &apos;mysql:mysql-connector-java&apos;</span><br><span class="line">    testImplementation &apos;org.springframework.boot:spring-boot-starter-test&apos;</span><br><span class="line">    compile group: &apos;org.mybatis.generator&apos;, name: &apos;mybatis-generator-core&apos;, version: &apos;1.3.5&apos;</span><br><span class="line">    compile group: &apos;tk.mybatis&apos;, name: &apos;mapper&apos;, version: &apos;4.0.3&apos;</span><br><span class="line">    compile group: &apos;com.github.pagehelper&apos;, name: &apos;pagehelper-spring-boot-starter&apos;, version: &apos;1.2.5&apos;</span><br><span class="line">    compile group: &apos;com.alibaba&apos;, name: &apos;druid-spring-boot-starter&apos;, version: &apos;1.1.10&apos;</span><br><span class="line">    compile group: &apos;org.springframework&apos;, name: &apos;spring-jdbc&apos;, version: &apos;5.1.4.RELEASE&apos;</span><br><span class="line">&#125;</span><br><span class="line">dependencyManagement &#123;</span><br><span class="line">    imports &#123;</span><br><span class="line">        mavenBom &quot;org.springframework.cloud:spring-cloud-dependencies:$&#123;springCloudVersion&#125;&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">bootJar &#123;</span><br><span class="line">    destinationDir = rootProject.file(&apos;build/libs&apos;)</span><br><span class="line">    archiveName = &apos;app.jar&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>#主要环境<br>编译器使用Idea，项目使用SpringBoot+Maven进行构建，SpringSecurity进行认证和授权，其中还涉及到的<br>框架包括Mybatis、Redis、Druid、JWT、Lombok、Logback。其中Redis的安装以及Idea中集成Lombok等插件<br>不单独进行展开，可自行百度进行环境准备。<br>[github项目地址] (<a href="https://github.com/Sjiay1023/permission" target="_blank" rel="noopener">https://github.com/Sjiay1023/permission</a>)</p>
+<p>#系统机构图<br><img src="../../../../imgages/flow.png" alt="系统架构图"></p>
+<h1 id="一、SpringBoot"><a href="#一、SpringBoot" class="headerlink" title="一、SpringBoot"></a>一、SpringBoot</h1><p>##创建项目</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">buildscript &#123;</span><br><span class="line">    ext &#123;</span><br><span class="line">        springBootVersion = &apos;2.1.2.RELEASE&apos;</span><br><span class="line">    &#125;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        mavenCentral()</span><br><span class="line">    &#125;</span><br><span class="line">    dependencies &#123;</span><br><span class="line">        classpath(&quot;org.springframework.boot:spring-boot-gradle-plugin:$&#123;springBootVersion&#125;&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">apply plugin: &apos;java&apos;</span><br><span class="line">apply plugin: &apos;org.springframework.boot&apos;</span><br><span class="line">apply plugin: &apos;io.spring.dependency-management&apos;</span><br><span class="line"></span><br><span class="line">group = &apos;mhh&apos;</span><br><span class="line">version = &apos;1.0&apos;</span><br><span class="line">sourceCompatibility = &apos;1.8&apos;</span><br><span class="line"></span><br><span class="line">repositories &#123;</span><br><span class="line">    mavenLocal()</span><br><span class="line">    mavenCentral()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ext &#123;</span><br><span class="line">    set(&apos;springCloudVersion&apos;, &apos;Greenwich.RC2&apos;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    runtimeOnly &apos;mysql:mysql-connector-java&apos;</span><br><span class="line">    testImplementation &apos;org.springframework.boot:spring-boot-starter-test&apos;</span><br><span class="line">    compile group: &apos;org.mybatis.generator&apos;, name: &apos;mybatis-generator-core&apos;, version: &apos;1.3.5&apos;</span><br><span class="line">    compile group: &apos;tk.mybatis&apos;, name: &apos;mapper&apos;, version: &apos;4.0.3&apos;</span><br><span class="line">    compile group: &apos;com.github.pagehelper&apos;, name: &apos;pagehelper-spring-boot-starter&apos;, version: &apos;1.2.5&apos;</span><br><span class="line">    compile group: &apos;com.alibaba&apos;, name: &apos;druid-spring-boot-starter&apos;, version: &apos;1.1.10&apos;</span><br><span class="line">    compile group: &apos;org.springframework&apos;, name: &apos;spring-jdbc&apos;, version: &apos;5.1.4.RELEASE&apos;</span><br><span class="line">&#125;</span><br><span class="line">dependencyManagement &#123;</span><br><span class="line">    imports &#123;</span><br><span class="line">        mavenBom &quot;org.springframework.cloud:spring-cloud-dependencies:$&#123;springCloudVersion&#125;&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">bootJar &#123;</span><br><span class="line">    destinationDir = rootProject.file(&apos;build/libs&apos;)</span><br><span class="line">    archiveName = &apos;app.jar&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 <h1 id="二、创建BaseMapper"><a href="#二、创建BaseMapper" class="headerlink" title="二、创建BaseMapper"></a>二、创建BaseMapper</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">package com.sjiay.demo.config;</span><br><span class="line"></span><br><span class="line">import tk.mybatis.mapper.common.Mapper;</span><br><span class="line">import tk.mybatis.mapper.common.MySqlMapper;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * BaseMapper继承通用mapper</span><br><span class="line"> * @param &lt;T&gt;</span><br><span class="line"> */</span><br><span class="line">public interface BaseMapper&lt;T&gt; extends Mapper&lt;T&gt;, MySqlMapper&lt;T&gt; &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -444,7 +448,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://Sjiay1023.github.io/2019/08/26/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/" title="SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权" target="_blank" rel="external">https://Sjiay1023.github.io/2019/08/26/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/</a>
+      <a href="https://Sjiay1023.github.io/2019/09/18/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/" title="SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权" target="_blank" rel="external">https://Sjiay1023.github.io/2019/09/18/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -490,13 +494,9 @@
   
   <ul class="pager pull-left">
     
-    <li class="prev">
-      <a href="/2019/08/26/SpringBoot集成通用mapper/" title="SpringBoot集成通用mapper"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
-    </li>
-    
     
     <li class="next">
-      <a href="/2019/08/19/me-first-blog/" title="第一个博客"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/2019/08/26/SpringBoot集成通用mapper/" title="SpringBoot集成通用mapper"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
