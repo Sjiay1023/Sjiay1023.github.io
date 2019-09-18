@@ -17,21 +17,21 @@
   <meta http-equiv="window-target" content="_top">
   
   
-  <title>SpringBoot集成通用mapper | MyBlog</title>
+  <title>SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权 | MyBlog</title>
   <meta name="description" content="原先使用的mybatis-generator-core会生成大量example的文件影响后期维护以及数据库的迁移，所以考虑对用通用mapper项目做一次啊重构减少项目代码的耦合性，以下是具体流程以及重构过程各中遇到的坑。[官方文档]（https://mapperhelper.github.io/docs/）">
 <meta name="keywords" content="Spring">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SpringBoot集成通用mapper">
-<meta property="og:url" content="https://Sjiay1023.github.io/2019/08/26/SpringBoot集成通用mapper/index.html">
+<meta property="og:title" content="SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权">
+<meta property="og:url" content="https://Sjiay1023.github.io/2019/08/26/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="原先使用的mybatis-generator-core会生成大量example的文件影响后期维护以及数据库的迁移，所以考虑对用通用mapper项目做一次啊重构减少项目代码的耦合性，以下是具体流程以及重构过程各中遇到的坑。[官方文档]（https://mapperhelper.github.io/docs/）">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-28T07:04:02.385Z">
+<meta property="og:updated_time" content="2019-09-18T03:20:31.785Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SpringBoot集成通用mapper">
+<meta name="twitter:title" content="SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权">
 <meta name="twitter:description" content="原先使用的mybatis-generator-core会生成大量example的文件影响后期维护以及数据库的迁移，所以考虑对用通用mapper项目做一次啊重构减少项目代码的耦合性，以下是具体流程以及重构过程各中遇到的坑。[官方文档]（https://mapperhelper.github.io/docs/）">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://Sjiay1023.github.io/2019/08/26/SpringBoot集成通用mapper/index.html">
+  <link rel="canonical" href="https://Sjiay1023.github.io/2019/08/26/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -342,14 +342,14 @@
 
 <main class="main" role="main">
   <div class="content">
-  <article id="post-SpringBoot集成通用mapper" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      SpringBoot集成通用mapper
+      SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权
     </h1>
   
 
@@ -357,7 +357,7 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2019/08/26/SpringBoot集成通用mapper/" class="article-date">
+	<a href="/2019/08/26/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/" class="article-date">
 	  <time datetime="2019-08-26T08:35:22.000Z" itemprop="datePublished">2019-08-26</time>
 	</a>
 </span>
@@ -383,7 +383,7 @@
 	</span>
 
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/08/26/SpringBoot集成通用mapper/#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/08/26/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/#comments" class="article-comment-link">评论</a></span>
         
 	
 		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 3.5k(字)</span>
@@ -444,7 +444,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://Sjiay1023.github.io/2019/08/26/SpringBoot集成通用mapper/" title="SpringBoot集成通用mapper" target="_blank" rel="external">https://Sjiay1023.github.io/2019/08/26/SpringBoot集成通用mapper/</a>
+      <a href="https://Sjiay1023.github.io/2019/08/26/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/" title="SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权" target="_blank" rel="external">https://Sjiay1023.github.io/2019/08/26/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -490,9 +490,13 @@
   
   <ul class="pager pull-left">
     
+    <li class="prev">
+      <a href="/2019/08/26/SpringBoot集成通用mapper/" title="SpringBoot集成通用mapper"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
     
     <li class="next">
-      <a href="/2019/08/26/SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权/" title="SpringBoot整合SpringSecurity+jwt+redis实现登录鉴权"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/2019/08/19/me-first-blog/" title="第一个博客"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
